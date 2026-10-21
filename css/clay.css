@@ -1,0 +1,814 @@
+/* =============================================================
+   CLAYMORPHISM DESIGN LAYER — DesiMart
+   Applies authentic 3D clay depth, extra-large rounded corners,
+   pastel blob backgrounds, pill-shaped badges, and tactile
+   micro-interactions to all product cards and interactive UI.
+
+   All text, product data, image sources & JS untouched.
+   ============================================================= */
+
+/* ─── Clay Design Tokens ────────────────────────────────────── */
+:root {
+  --clay-r-card:   32px;
+  --clay-r-media:  28px;
+  --clay-r-badge:  50px;
+  --clay-r-btn:    50px;
+  --clay-r-ctrl:   50px;
+
+  --clay-shadow-card:
+    inset -6px -6px 12px rgba(0, 0, 0, 0.08),
+    inset  6px  6px 12px rgba(255, 255, 255, 0.65),
+    8px 16px 24px rgba(0, 0, 0, 0.07),
+    0 2px 6px rgba(0, 0, 0, 0.04);
+
+  --clay-shadow-card-hover:
+    inset -6px -6px 12px rgba(0, 0, 0, 0.08),
+    inset  6px  6px 12px rgba(255, 255, 255, 0.65),
+    12px 24px 36px rgba(0, 0, 0, 0.10),
+    0 4px 10px rgba(0, 0, 0, 0.05);
+
+  --clay-shadow-badge:
+    inset -2px -2px 4px rgba(0, 0, 0, 0.15),
+    inset  2px  2px 4px rgba(255, 255, 255, 0.40),
+    0 3px 8px rgba(0, 0, 0, 0.10);
+
+  --clay-shadow-ctrl:
+    inset -3px -3px 6px rgba(0, 0, 0, 0.10),
+    inset  3px  3px 6px rgba(255, 255, 255, 0.70),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+
+  --clay-shadow-media:
+    inset -4px -4px 8px rgba(0, 0, 0, 0.07),
+    inset  4px  4px 8px rgba(255, 255, 255, 0.55),
+    6px 12px 20px rgba(0, 0, 0, 0.06);
+
+  --clay-p0: #D1F4E0;
+  --clay-p1: #C2E8B8;
+  --clay-p2: #FCE0E6;
+  --clay-p3: #FFF1C5;
+  --clay-p4: #C9E6F7;
+  --clay-p5: #F7E6D0;
+
+  --clay-dur: 0.3s;
+  --clay-ease: cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   1. PRODUCT CARD
+   ═══════════════════════════════════════════════════════════════ */
+
+.product-card {
+  border-radius: var(--clay-r-card) !important;
+  background: var(--card-pastel, var(--clay-p0)) !important;
+  box-shadow: var(--clay-shadow-card) !important;
+  border: none !important;
+  padding: 14px !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    box-shadow var(--clay-dur) var(--clay-ease) !important;
+  will-change: transform;
+}
+
+@media (hover: hover) {
+  .product-card:hover {
+    transform: translateY(-5px) scale(1.01) !important;
+    box-shadow: var(--clay-shadow-card-hover) !important;
+  }
+}
+
+.product-card:active {
+  transform: translateY(0px) scale(0.98) !important;
+  box-shadow: var(--clay-shadow-card) !important;
+}
+
+.product-card:nth-child(6n+1) { --card-pastel: var(--clay-p0); }
+.product-card:nth-child(6n+2) { --card-pastel: var(--clay-p1); }
+.product-card:nth-child(6n+3) { --card-pastel: var(--clay-p2); }
+.product-card:nth-child(6n+4) { --card-pastel: var(--clay-p3); }
+.product-card:nth-child(6n+5) { --card-pastel: var(--clay-p4); }
+.product-card:nth-child(6n+6) { --card-pastel: var(--clay-p5); }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   2. PRODUCT CARD MEDIA BLOB
+   ═══════════════════════════════════════════════════════════════ */
+
+.product-card__media {
+  border-radius: var(--clay-r-media) !important;
+  box-shadow: var(--clay-shadow-media) !important;
+  overflow: hidden !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    box-shadow var(--clay-dur) var(--clay-ease) !important;
+}
+
+@media (hover: hover) {
+  .product-card:hover .product-card__media {
+    transform: scale(1.02) !important;
+    box-shadow: var(--clay-shadow-card-hover) !important;
+  }
+}
+
+.product-card__img {
+  padding: 16px !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   3. BADGE PILL
+   ═══════════════════════════════════════════════════════════════ */
+
+.product-card__badge {
+  border-radius: var(--clay-r-badge) !important;
+  background: #1E1E1E !important;
+  color: #FFFFFF !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  padding: 4px 12px !important;
+  box-shadow: var(--clay-shadow-badge) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  letter-spacing: 0.02em;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   4. WISHLIST HEART BUTTON
+   ═══════════════════════════════════════════════════════════════ */
+
+.wishlist-btn {
+  border-radius: 50% !important;
+  background: #FFFFFF !important;
+  box-shadow: var(--clay-shadow-ctrl) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  width: 36px !important;
+  height: 36px !important;
+  border: none !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    box-shadow var(--clay-dur) ease !important;
+}
+
+@media (hover: hover) {
+  .wishlist-btn:hover {
+    transform: scale(1.14) !important;
+    box-shadow: var(--clay-shadow-card-hover) !important;
+    background: #FFFFFF !important;
+  }
+}
+
+.wishlist-btn:active {
+  transform: scale(0.92) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   5. CAROUSEL ARROW BUTTONS
+   ═══════════════════════════════════════════════════════════════ */
+
+.carousel-arrow-btn {
+  border-radius: 50% !important;
+  background: #FFFFFF !important;
+  border: none !important;
+  box-shadow: var(--clay-shadow-ctrl) !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    box-shadow var(--clay-dur) ease !important;
+}
+
+@media (hover: hover) {
+  .carousel-arrow-btn:hover {
+    transform: scale(1.12) !important;
+    box-shadow: var(--clay-shadow-card-hover) !important;
+    background: #FFFFFF !important;
+  }
+}
+
+.carousel-arrow-btn:active {
+  transform: scale(0.92) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   6. CATEGORY CHIPS
+   ═══════════════════════════════════════════════════════════════ */
+
+.chip {
+  border-radius: var(--clay-r-badge) !important;
+  box-shadow:
+    inset -2px -2px 4px rgba(0, 0, 0, 0.06),
+    inset  2px  2px 4px rgba(255, 255, 255, 0.60),
+    0 3px 8px rgba(0, 0, 0, 0.06) !important;
+  border: none !important;
+  background: #FFFFFF !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    box-shadow var(--clay-dur) ease,
+    background var(--clay-dur) ease !important;
+}
+
+@media (hover: hover) {
+  .chip:hover {
+    transform: translateY(-2px) !important;
+    box-shadow:
+      inset -2px -2px 4px rgba(0, 0, 0, 0.06),
+      inset  2px  2px 4px rgba(255, 255, 255, 0.60),
+      0 6px 14px rgba(0, 0, 0, 0.09) !important;
+  }
+}
+
+.chip.is-active {
+  background: #1E1E1E !important;
+  color: #FFFFFF !important;
+  box-shadow:
+    inset -2px -2px 4px rgba(0, 0, 0, 0.25),
+    inset  2px  2px 4px rgba(255, 255, 255, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.18) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   7. ADD TO CART BUTTON (on card)
+   ═══════════════════════════════════════════════════════════════ */
+
+.product-card .btn--sm.add-to-cart-btn {
+  border-radius: var(--clay-r-btn) !important;
+  box-shadow: var(--clay-shadow-badge) !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    background-color var(--clay-dur) ease,
+    box-shadow var(--clay-dur) ease !important;
+}
+
+@media (hover: hover) {
+  .product-card .btn--sm.add-to-cart-btn:hover {
+    transform: translateY(-2px) scale(1.04) !important;
+    box-shadow: var(--clay-shadow-card-hover) !important;
+  }
+}
+
+.product-card .btn--sm.add-to-cart-btn:active {
+  transform: translateY(0) scale(0.96) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   8. QUICK VIEW SHEET
+   ═══════════════════════════════════════════════════════════════ */
+
+#quickViewSheet {
+  border-radius: 36px !important;
+  box-shadow:
+    inset -6px -6px 12px rgba(0, 0, 0, 0.06),
+    inset  6px  6px 12px rgba(255, 255, 255, 0.50),
+    0 32px 80px rgba(0, 0, 0, 0.22) !important;
+}
+
+.qv-hero-section {
+  border-radius: 32px 32px 0 0 !important;
+}
+
+.qv-badge-pill {
+  border-radius: var(--clay-r-badge) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  box-shadow: var(--clay-shadow-badge) !important;
+  font-weight: 700 !important;
+}
+
+.qv-nav-switch {
+  border-radius: var(--clay-r-ctrl) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  box-shadow: var(--clay-shadow-ctrl) !important;
+}
+
+.qv-nav-btn {
+  border-radius: 50% !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    background-color var(--clay-dur) ease !important;
+}
+
+@media (hover: hover) {
+  .qv-nav-btn:hover {
+    transform: scale(1.18) !important;
+    background: rgba(0, 0, 0, 0.07) !important;
+  }
+}
+
+.qv-nav-btn:active {
+  transform: scale(0.88) !important;
+}
+
+.qv-close-btn {
+  border-radius: 50% !important;
+  background: #FFFFFF !important;
+  box-shadow: var(--clay-shadow-ctrl) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    box-shadow var(--clay-dur) ease !important;
+}
+
+@media (hover: hover) {
+  .qv-close-btn:hover {
+    transform: scale(1.12) !important;
+    box-shadow: var(--clay-shadow-card-hover) !important;
+    background: #FFFFFF !important;
+  }
+}
+
+.qv-close-btn:active {
+  transform: scale(0.90) !important;
+}
+
+.qv-content-card {
+  border-radius: 32px 32px 0 0 !important;
+  box-shadow:
+    0 -8px 30px rgba(0, 0, 0, 0.06),
+    inset 0 4px 8px rgba(255, 255, 255, 0.60) !important;
+}
+
+.qv-framed-box {
+  border-radius: 20px !important;
+  box-shadow:
+    inset -3px -3px 6px rgba(0, 0, 0, 0.08),
+    inset  3px  3px 6px rgba(255, 255, 255, 0.55),
+    0 6px 14px rgba(0, 0, 0, 0.08) !important;
+}
+
+.qv-add-btn {
+  border-radius: var(--clay-r-btn) !important;
+  box-shadow: var(--clay-shadow-badge) !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    background-color var(--clay-dur) ease,
+    box-shadow var(--clay-dur) ease !important;
+}
+
+@media (hover: hover) {
+  .qv-add-btn:hover {
+    transform: translateY(-2px) scale(1.03) !important;
+    box-shadow: var(--clay-shadow-card-hover) !important;
+  }
+}
+
+.qv-add-btn:active {
+  transform: scale(0.96) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   9. MODAL / OVERLAY SHEETS
+   ═══════════════════════════════════════════════════════════════ */
+
+.overlay-card,
+.sheet {
+  border-radius: 32px !important;
+  box-shadow:
+    inset -4px -4px 8px rgba(0, 0, 0, 0.05),
+    inset  4px  4px 8px rgba(255, 255, 255, 0.45),
+    0 24px 64px rgba(0, 0, 0, 0.18) !important;
+}
+
+.sheet .btn--icon-only,
+.overlay-card .btn--icon-only {
+  border-radius: 50% !important;
+  background: var(--surface-2) !important;
+  box-shadow: var(--clay-shadow-ctrl) !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    background-color var(--clay-dur) ease !important;
+}
+
+@media (hover: hover) {
+  .sheet .btn--icon-only:hover,
+  .overlay-card .btn--icon-only:hover {
+    transform: scale(1.1) !important;
+    background: #FFFFFF !important;
+  }
+}
+
+.sheet .btn--icon-only:active,
+.overlay-card .btn--icon-only:active {
+  transform: scale(0.92) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   10. CART ITEM THUMBNAIL
+   ═══════════════════════════════════════════════════════════════ */
+
+.cart-row__thumb {
+  border-radius: 16px !important;
+  box-shadow:
+    inset -2px -2px 4px rgba(0, 0, 0, 0.07),
+    inset  2px  2px 4px rgba(255, 255, 255, 0.50),
+    0 3px 8px rgba(0, 0, 0, 0.06) !important;
+  background: var(--surface-2) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   11. CART STEPPER PILL
+   ═══════════════════════════════════════════════════════════════ */
+
+.cart-stepper {
+  border-radius: var(--clay-r-ctrl) !important;
+  box-shadow:
+    inset -2px -2px 4px rgba(0, 0, 0, 0.07),
+    inset  2px  2px 4px rgba(255, 255, 255, 0.55),
+    0 2px 6px rgba(0, 0, 0, 0.05) !important;
+  background: #F4EEE6 !important;
+}
+
+.cart-stepper__btn {
+  border-radius: 50% !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    background-color var(--clay-dur) ease !important;
+}
+
+.cart-stepper__btn:active {
+  transform: scale(0.88) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   12. SIDEBAR CARDS
+   ═══════════════════════════════════════════════════════════════ */
+
+.card.sidebar-card {
+  border-radius: 28px !important;
+  background: #FFFFFF !important;
+  box-shadow:
+    inset -4px -4px 8px rgba(0, 0, 0, 0.05),
+    inset  4px  4px 8px rgba(255, 255, 255, 0.60),
+    0 10px 32px rgba(60, 40, 20, 0.09) !important;
+  border: none !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   13. PRIMARY CHECKOUT BUTTON
+   ═══════════════════════════════════════════════════════════════ */
+
+.cart-checkout-primary {
+  border-radius: var(--clay-r-btn) !important;
+  box-shadow:
+    inset -3px -3px 6px rgba(0, 0, 0, 0.18),
+    inset  3px  3px 6px rgba(255, 255, 255, 0.10),
+    0 6px 18px rgba(0, 0, 0, 0.18) !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    background-color var(--clay-dur) ease,
+    box-shadow var(--clay-dur) ease !important;
+}
+
+@media (hover: hover) {
+  .cart-checkout-primary:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow:
+      inset -3px -3px 6px rgba(0, 0, 0, 0.20),
+      inset  3px  3px 6px rgba(255, 255, 255, 0.10),
+      0 10px 24px rgba(0, 0, 0, 0.22) !important;
+  }
+}
+
+.cart-checkout-primary:active:not(:disabled) {
+  transform: translateY(0) scale(0.97) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   14. STATUS BADGES
+   ═══════════════════════════════════════════════════════════════ */
+
+.order-status-chip {
+  border-radius: var(--clay-r-badge) !important;
+  box-shadow: var(--clay-shadow-badge) !important;
+}
+
+.cart-count-pill {
+  border-radius: var(--clay-r-badge) !important;
+  box-shadow:
+    inset -1px -1px 3px rgba(0, 0, 0, 0.10),
+    inset  1px  1px 3px rgba(255, 255, 255, 0.50) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   15. SEARCH INPUT
+   ═══════════════════════════════════════════════════════════════ */
+
+.search-input {
+  border-radius: var(--clay-r-btn) !important;
+  box-shadow:
+    inset -3px -3px 6px rgba(0, 0, 0, 0.06),
+    inset  3px  3px 6px rgba(255, 255, 255, 0.65),
+    0 3px 10px rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  background: #FFFFFF !important;
+}
+
+.search-input:focus {
+  box-shadow:
+    inset -3px -3px 6px rgba(0, 0, 0, 0.06),
+    inset  3px  3px 6px rgba(255, 255, 255, 0.65),
+    0 0 0 3px rgba(45, 93, 153, 0.14),
+    0 3px 10px rgba(0, 0, 0, 0.07) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   16. AVATAR / HEADER BUTTONS
+   ═══════════════════════════════════════════════════════════════ */
+
+.avatar-btn {
+  border-radius: 50% !important;
+  box-shadow: var(--clay-shadow-ctrl) !important;
+  border: none !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    box-shadow var(--clay-dur) ease !important;
+}
+
+@media (hover: hover) {
+  .avatar-btn:hover {
+    transform: scale(1.08) !important;
+    box-shadow: var(--clay-shadow-card-hover) !important;
+  }
+}
+
+.avatar-btn:active {
+  transform: scale(0.93) !important;
+}
+
+.header-search-trigger,
+.hamburger-btn {
+  border-radius: 50% !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    background-color var(--clay-dur) ease !important;
+}
+
+@media (hover: hover) {
+  .header-search-trigger:hover,
+  .hamburger-btn:hover {
+    transform: scale(1.10) !important;
+    background: rgba(0, 0, 0, 0.05) !important;
+  }
+}
+
+.header-cart-pill {
+  border-radius: var(--clay-r-btn) !important;
+  box-shadow:
+    inset -2px -2px 4px rgba(0, 0, 0, 0.06),
+    inset  2px  2px 4px rgba(255, 255, 255, 0.55),
+    0 3px 8px rgba(0, 0, 0, 0.06) !important;
+  border: none !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    box-shadow var(--clay-dur) ease !important;
+}
+
+@media (hover: hover) {
+  .header-cart-pill:hover {
+    transform: translateY(-1px) scale(1.02) !important;
+    box-shadow:
+      inset -2px -2px 4px rgba(0, 0, 0, 0.06),
+      inset  2px  2px 4px rgba(255, 255, 255, 0.55),
+      0 6px 14px rgba(0, 0, 0, 0.09) !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   17. SIDEBAR EMPTY STATE
+   ═══════════════════════════════════════════════════════════════ */
+
+.sidebar-empty-state {
+  border-radius: 22px !important;
+  box-shadow:
+    inset -2px -2px 4px rgba(0, 0, 0, 0.04),
+    inset  2px  2px 4px rgba(255, 255, 255, 0.50) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   18. AUTH CARD
+   ═══════════════════════════════════════════════════════════════ */
+
+.auth-card {
+  border-radius: 32px !important;
+  box-shadow:
+    inset -4px -4px 8px rgba(0, 0, 0, 0.05),
+    inset  4px  4px 8px rgba(255, 255, 255, 0.55),
+    0 16px 48px rgba(0, 0, 0, 0.10) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   19. CARD ENTER ANIMATION
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes clayCardEnter {
+  0%   { opacity: 0; transform: translateY(20px) scale(0.96); }
+  60%  { opacity: 1; }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.product-card.card-enter {
+  animation: clayCardEnter 480ms var(--clay-ease) both;
+  animation-delay: calc(var(--i, 0) * 50ms);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   20. GENERAL STEPPER
+   ═══════════════════════════════════════════════════════════════ */
+
+.stepper {
+  border-radius: var(--clay-r-ctrl) !important;
+  box-shadow:
+    inset -2px -2px 4px rgba(0, 0, 0, 0.06),
+    inset  2px  2px 4px rgba(255, 255, 255, 0.55),
+    0 2px 6px rgba(0, 0, 0, 0.05) !important;
+}
+
+.stepper__btn {
+  border-radius: 50% !important;
+  box-shadow:
+    inset -1px -1px 3px rgba(0, 0, 0, 0.08),
+    inset  1px  1px 3px rgba(255, 255, 255, 0.60),
+    0 2px 4px rgba(0, 0, 0, 0.07) !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease) !important;
+}
+
+.stepper__btn:active {
+  transform: scale(0.88) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   21. PRIMARY BUTTON (general)
+   ═══════════════════════════════════════════════════════════════ */
+
+.btn:not(.btn--ghost):not(.btn--icon-only):not(.btn--secondary) {
+  border-radius: var(--clay-r-btn) !important;
+  box-shadow:
+    inset -3px -3px 6px rgba(0, 0, 0, 0.18),
+    inset  3px  3px 6px rgba(255, 255, 255, 0.10),
+    0 5px 14px rgba(0, 0, 0, 0.15) !important;
+  transition:
+    transform var(--clay-dur) var(--clay-ease),
+    background-color var(--clay-dur) ease,
+    box-shadow var(--clay-dur) ease !important;
+}
+
+@media (hover: hover) {
+  .btn:not(.btn--ghost):not(.btn--icon-only):not(.btn--secondary):hover {
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow:
+      inset -3px -3px 6px rgba(0, 0, 0, 0.18),
+      inset  3px  3px 6px rgba(255, 255, 255, 0.10),
+      0 8px 20px rgba(0, 0, 0, 0.18) !important;
+  }
+}
+
+.btn:not(.btn--ghost):not(.btn--icon-only):not(.btn--secondary):active {
+  transform: translateY(0) scale(0.97) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   22. CARD FOOTER DIVIDER
+   ═══════════════════════════════════════════════════════════════ */
+
+.product-card__footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+  padding-top: 10px !important;
+  margin-top: 8px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   REDUCED MOTION SAFEGUARD
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .product-card,
+  .product-card__media,
+  .wishlist-btn,
+  .carousel-arrow-btn,
+  .chip,
+  .qv-close-btn,
+  .qv-nav-btn,
+  .cart-checkout-primary,
+  .avatar-btn,
+  .stepper__btn,
+  .cart-stepper__btn {
+    transition: none !important;
+    animation: none !important;
+  }
+  .product-card:hover,
+  .product-card:active {
+    transform: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   23. HIDE BOTTOM INSPECTOR BAR & CLEAN EDGE-TO-EDGE LAYOUT
+   ═══════════════════════════════════════════════════════════════ */
+
+#inspectorPanel,
+.inspector {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+body {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   24. TWO-COLUMN GRID LAYOUT & CART SIDEBAR ALIGNMENT
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (min-width: 1024px) {
+  .app-layout {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 340px !important;
+    align-items: start !important;
+    gap: 32px !important;
+    width: 100% !important;
+  }
+
+  .catalog-column,
+  .app-layout > section:first-child {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .sticky-sidebar {
+    position: sticky !important;
+    top: 24px !important;
+    align-self: start !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+    min-width: 0 !important;
+    width: 340px !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    justify-self: end !important;
+    z-index: 10 !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .app-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+
+  .catalog-column,
+  .app-layout > section:first-child {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .sticky-sidebar {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+  }
+}
+
+.product-grid {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  contain: inline-size;
+}
+
+

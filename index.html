@@ -6,6 +6,10 @@
   <title>DesiMart — Indian Shopping App (DSA Mini-Project)</title>
   <meta name="description" content="A mobile-friendly, iOS-styled shopping website for Indian products powered by hand-written Data Structures: Linked List, Stack, and Queue." />
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="apple-touch-icon" href="assets/logo.png" />
+
   <!-- Google Fonts: Playfair Display + Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,6 +21,7 @@
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/checkout.css" />
   <link rel="stylesheet" href="css/inspector.css" />
+  <link rel="stylesheet" href="css/clay.css" />
 </head>
 <body>
 
@@ -110,7 +115,7 @@
     <!-- Main Grid Layout -->
     <div class="app-layout">
       <!-- Product Catalog Container -->
-      <section>
+      <section class="catalog-column">
         <div class="carousel-control-row">
           <span class="carousel-hint">Swipe or slide horizontally</span>
           <div class="carousel-arrows">
@@ -244,8 +249,8 @@
     </div>
   </div>
 
-  <!-- Bottom Data Structure Inspector Panel -->
-  <aside id="inspectorPanel" class="inspector" aria-label="Data Structure Inspector">
+  <!-- Bottom Data Structure Inspector Panel (hidden from main view) -->
+  <aside id="inspectorPanel" class="inspector" aria-label="Data Structure Inspector" style="display: none !important;" hidden>
     <div id="inspectorHeader" class="inspector__header">
       <div class="inspector__title-group">
         <div class="inspector__handle"></div>

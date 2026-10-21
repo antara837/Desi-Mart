@@ -21,7 +21,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 0;
-  padding-bottom: 70px; /* Space for collapsed bottom Inspector */
+  padding-bottom: 0;
   overflow-x: hidden;
   max-width: 100%;
 }
@@ -33,13 +33,13 @@ body.no-scroll {
 /* 1. Page Frame: Large white rounded container inside warm beige page */
 .app-showcase-frame {
   width: min(100% - 32px, 1280px);
-  margin: 20px auto 80px auto;
+  margin: 20px auto 24px auto;
   background: var(--frame-bg);
   border-radius: var(--r-frame);
   box-shadow: var(--shadow-frame);
   position: relative;
   overflow: hidden;
-  min-height: calc(100vh - 40px);
+  min-height: calc(100vh - 44px);
   display: flex;
   flex-direction: column;
   transition: transform var(--dur) var(--ease-smooth);
@@ -48,7 +48,7 @@ body.no-scroll {
 @media (max-width: 768px) {
   .app-showcase-frame {
     width: calc(100% - 16px);
-    margin: 8px auto 70px auto;
+    margin: 8px auto 16px auto;
     border-radius: 16px;
     box-shadow: 0 8px 24px rgba(78, 64, 52, 0.06);
   }
@@ -57,14 +57,14 @@ body.no-scroll {
 /* Main Container (Airy whitespace) */
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 20px;
 }
 
 @media (min-width: 1024px) {
   .container {
-    padding: 0 40px;
+    padding: 0 32px;
   }
 }
 
@@ -252,16 +252,27 @@ body.no-scroll {
   box-sizing: border-box;
 }
 
+.catalog-column {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
 @media (min-width: 1024px) {
   .app-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) clamp(280px, 26vw, 340px);
+    grid-template-columns: minmax(0, 1fr) 340px;
     align-items: start;
-    gap: 24px;
+    gap: 32px;
+    width: 100%;
   }
 
-  .app-layout > * {
+  .catalog-column {
     min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
   }
 
   .sticky-sidebar {
@@ -272,7 +283,10 @@ body.no-scroll {
     flex-direction: column;
     gap: 24px;
     min-width: 0;
-    width: 100%;
+    width: 340px;
+    max-width: 100%;
+    margin-left: auto;
+    justify-self: end;
   }
 }
 
@@ -283,10 +297,18 @@ body.no-scroll {
     gap: 24px;
   }
 
+  .catalog-column {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
   .sticky-sidebar {
     position: static;
     width: 100%;
     min-width: 0;
+    margin-left: 0;
   }
 }
 
