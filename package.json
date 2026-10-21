@@ -1,0 +1,10 @@
+{
+  "name": "desimart",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "DesiMart — Indian Shopping App (DSA Mini-Project)",
+  "scripts": {
+    "dev": "npx serve -p 5500",
+    "start": "npx serve -p 5500"
+  }
+}

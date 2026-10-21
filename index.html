@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" data-motion="on">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DesiMart — Indian Shopping App (DSA Mini-Project)</title>
+  <meta name="description" content="A mobile-friendly, iOS-styled shopping website for Indian products powered by hand-written Data Structures: Linked List, Stack, and Queue." />
+
+  <!-- Google Fonts: Playfair Display + Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/checkout.css" />
+  <link rel="stylesheet" href="css/inspector.css" />
+</head>
+<body>
+
+  <!-- Outer Rounded Showcase Frame with Diffuse Drop Shadow -->
+  <div class="app-showcase-frame">
+
+    <!-- Minimal 3-part top bar from reference -->
+    <header class="app-header">
+      <div class="container header-content">
+        <!-- 1. Left: Thin-line search icon -->
+        <div class="header-part header-part--left">
+          <button id="headerSearchBtn" class="btn btn--ghost btn--icon-only header-search-trigger" aria-label="Search products">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </button>
+        </div>
+
+        <!-- 2. Center: Brand wordmark in high-contrast serif -->
+        <div class="header-part header-part--center">
+          <a href="#" class="brand" aria-label="DesiMart Home">
+            <img src="assets/logo.png" alt="DesiMart Logo" class="brand-logo" />
+            <h1 class="brand-title">DesiMart</h1>
+          </a>
+        </div>
+
+        <!-- 3. Right: Thin two-line hamburger icon & preserved header actions -->
+        <div class="header-part header-part--right header-actions">
+          <button id="openCartBtn" class="btn btn--secondary btn--sm header-cart-pill" aria-label="View Shopping Cart">
+            <span>Cart</span>
+            <span id="headerCartBadge" class="cart-badge">0</span>
+          </button>
+          <button id="openSettingsBtn" class="btn btn--ghost btn--icon-only hamburger-btn" aria-label="Open Filters & Settings">
+            <!-- Thin two-line hamburger icon from reference -->
+            <svg class="hamburger-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><line x1="4" y1="8" x2="20" y2="8"/><line x1="7" y1="16" x2="20" y2="16"/></svg>
+          </button>
+          <button id="openProfileBtn" class="avatar-btn" aria-label="Open Profile and Account Settings" style="display: none;">
+            GU
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Demo Authentication Screen (shown when signed out) -->
+    <div id="authScreen" class="auth-screen">
+      <!-- Rendered dynamically by renderAuth.js -->
+    </div>
+
+    <!-- Main Catalog App Content (shown when signed in) -->
+    <main id="appMain" class="container" style="display: none;">
+    <div style="display: flex; align-items: baseline; justify-content: space-between;">
+      <h2 class="page-title" aria-label="Explore Indian Products">
+        <span class="sweep-letter" style="--char-idx: 0">E</span><span class="sweep-letter" style="--char-idx: 1">x</span><span class="sweep-letter" style="--char-idx: 2">p</span><span class="sweep-letter" style="--char-idx: 3">l</span><span class="sweep-letter" style="--char-idx: 4">o</span><span class="sweep-letter" style="--char-idx: 5">r</span><span class="sweep-letter" style="--char-idx: 6">e</span>&nbsp;<span class="sweep-letter" style="--char-idx: 7">I</span><span class="sweep-letter" style="--char-idx: 8">n</span><span class="sweep-letter" style="--char-idx: 9">d</span><span class="sweep-letter" style="--char-idx: 10">i</span><span class="sweep-letter" style="--char-idx: 11">a</span><span class="sweep-letter" style="--char-idx: 12">n</span>&nbsp;<span class="sweep-letter" style="--char-idx: 13">P</span><span class="sweep-letter" style="--char-idx: 14">r</span><span class="sweep-letter" style="--char-idx: 15">o</span><span class="sweep-letter" style="--char-idx: 16">d</span><span class="sweep-letter" style="--char-idx: 17">u</span><span class="sweep-letter" style="--char-idx: 18">c</span><span class="sweep-letter" style="--char-idx: 19">t</span><span class="sweep-letter" style="--char-idx: 20">s</span>
+      </h2>
+    </div>
+
+    <!-- Search & Sort Controls -->
+    <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+      <div class="search-box" style="flex: 1; min-width: 240px; margin-bottom: 0;">
+        <span class="search-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search tea, rice, ghee, spices, clothes..." aria-label="Search products" />
+        <button id="searchClearBtn" class="search-clear" style="display: none;" aria-label="Clear search">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <label for="sortSelect" style="font-size: 14px; font-weight: 500; color: var(--text-2);">Sort:</label>
+        <select id="sortSelect" class="chip" style="padding-right: 12px; height: 44px; appearance: auto; cursor: pointer;">
+          <option value="featured">Featured</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="rating">Highest Rating</option>
+          <option value="newest">Newest Arrivals</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Category Chips Bar -->
+    <nav class="chips-scroll-container" aria-label="Product categories">
+      <div id="categoryChips" class="chips-group">
+        <button class="chip is-active" data-category="All">All</button>
+        <button class="chip" data-category="Groceries">Groceries</button>
+        <button class="chip" data-category="Snacks">Snacks</button>
+        <button class="chip" data-category="Beverages">Beverages</button>
+        <button class="chip" data-category="Clothing">Clothing</button>
+        <button class="chip" data-category="Home & Festive">Home & Festive</button>
+      </div>
+    </nav>
+
+    <!-- Main Grid Layout -->
+    <div class="app-layout">
+      <!-- Product Catalog Container -->
+      <section>
+        <div class="carousel-control-row">
+          <span class="carousel-hint">Swipe or slide horizontally</span>
+          <div class="carousel-arrows">
+            <button id="carouselPrevBtn" class="carousel-arrow-btn" aria-label="Scroll carousel left">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button id="carouselNextBtn" class="carousel-arrow-btn" aria-label="Scroll carousel right">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="productGrid" class="product-grid">
+          <!-- Rendered dynamically by renderCatalog.js -->
+        </div>
+
+        <!-- Recommended Products Section (You May Also Like) -->
+        <section style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--separator);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+            <div>
+              <h3 style="font-size: 20px; font-weight: 700; margin: 0;">Recommended For You</h3>
+              <span style="font-size: 13px; color: var(--text-2);">Top Picks</span>
+            </div>
+            <div class="carousel-arrows">
+              <button id="recPrevBtn" class="carousel-arrow-btn" aria-label="Scroll recommendations left">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+              <button id="recNextBtn" class="carousel-arrow-btn" aria-label="Scroll recommendations right">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
+          <div id="recommendedGrid" class="product-grid">
+            <!-- Rendered dynamically using the SAME product card design -->
+          </div>
+        </section>
+      </section>
+
+      <!-- Cart Card and Order Queue Sidebar -->
+      <aside class="sticky-sidebar">
+        <!-- Cart Card Container -->
+        <section id="cartCard" class="card sidebar-card">
+          <!-- Rendered dynamically by renderCart.js -->
+        </section>
+
+        <!-- Orders Queue Container -->
+        <section id="ordersCard" class="card sidebar-card">
+          <!-- Rendered dynamically by renderOrders.js -->
+        </section>
+      </aside>
+    </div>
+  </main>
+  </div> <!-- /.app-showcase-frame -->
+
+  <!-- Settings & Filters Sheet Modal -->
+  <div id="modalOverlay" class="overlay">
+    <div id="settingsSheet" class="overlay-card overlay-card--narrow sheet" role="dialog" aria-modal="true" aria-label="Filters and Settings Sheet">
+      <div class="sheet__handle"></div>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+        <h2 style="font-size: 20px; font-weight: 700;">Filters & Settings</h2>
+        <button id="closeSettingsBtn" class="btn btn--ghost btn--icon-only" aria-label="Close Filters">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Filter Options -->
+      <div class="sheet__row">
+        <div>
+          <div style="font-weight: 600; font-size: 15px;">Price Range</div>
+          <div style="font-size: 13px; color: var(--text-2);">Filter products by budget</div>
+        </div>
+        <select id="filterPriceSelect" class="chip" style="height: 38px; appearance: auto; cursor: pointer;">
+          <option value="all">All Prices</option>
+          <option value="under-200">Under ₹200</option>
+          <option value="200-500">₹200 - ₹500</option>
+          <option value="above-500">Above ₹500</option>
+        </select>
+      </div>
+
+      <div class="sheet__row">
+        <div>
+          <div style="font-weight: 600; font-size: 15px;">Minimum Rating</div>
+          <div style="font-size: 13px; color: var(--text-2);">Filter top customer rated items</div>
+        </div>
+        <select id="filterRatingSelect" class="chip" style="height: 38px; appearance: auto; cursor: pointer;">
+          <option value="0">All Ratings</option>
+          <option value="4.5">4.5+ ⭐ Ratings</option>
+          <option value="4.8">4.8+ ⭐ Ratings</option>
+        </select>
+      </div>
+
+      <div class="sheet__row">
+        <div>
+          <div style="font-weight: 600; font-size: 16px;">Animations</div>
+          <div style="font-size: 13px; color: var(--text-2);">Turn off to reduce motion & smooth transitions</div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="motionToggle" role="switch" aria-label="Animations" />
+          <span class="switch__track"></span>
+          <span class="switch__thumb"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Sidebar Modal & Overlay -->
+  <div id="profileOverlay" class="overlay">
+    <div id="profileSheet" class="overlay-card profile-sidebar-card" role="dialog" aria-modal="true" aria-label="Profile and Account Settings">
+      <!-- Rendered dynamically by renderProfile.js -->
+    </div>
+  </div>
+
+  <!-- Cart Sheet Modal & Overlay -->
+  <div id="cartOverlay" class="overlay">
+    <div id="cartSheet" class="overlay-card overlay-card--narrow sheet" role="dialog" aria-modal="true" aria-label="Shopping Cart Sheet">
+      <!-- Rendered dynamically by renderCart.js -->
+    </div>
+  </div>
+
+  <!-- Product Quick View Modal & Overlay -->
+  <div id="quickViewOverlay" class="overlay">
+    <div id="quickViewSheet" class="overlay-card sheet" role="dialog" aria-modal="true" aria-label="Product Details Quick View">
+      <!-- Rendered dynamically by renderQuickView.js -->
+    </div>
+  </div>
+
+  <!-- Multi-Step Checkout Modal & Overlay -->
+  <div id="checkoutOverlay" class="overlay checkout-overlay">
+    <div id="checkoutSheet" class="overlay-card checkout-sheet" role="dialog" aria-modal="true" aria-label="Checkout Sheet">
+      <!-- Rendered dynamically by renderCheckout.js -->
+    </div>
+  </div>
+
+  <!-- Bottom Data Structure Inspector Panel -->
+  <aside id="inspectorPanel" class="inspector" aria-label="Data Structure Inspector">
+    <div id="inspectorHeader" class="inspector__header">
+      <div class="inspector__title-group">
+        <div class="inspector__handle"></div>
+        <span class="inspector__title">DS Inspector</span>
+        <span id="inspectorLog" class="inspector__log">Initialized — Ready</span>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="inspector__stats">
+          <span id="statNodes" class="stat-chip">nodes 0</span>
+          <span id="statStack" class="stat-chip">stack 0</span>
+          <span id="statQueue" class="stat-chip">orders 0</span>
+          <span id="statEmail" class="stat-chip">emails 0</span>
+        </div>
+        <span class="inspector__toggle-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="inspector__body">
+      <!-- Mobile Segmented Tabs -->
+      <nav class="inspector__tabs" aria-label="Inspector Views">
+        <button class="inspector__tab is-active" data-target="colCart">Cart (Linked List)</button>
+        <button class="inspector__tab" data-target="colStack">Undo (Stack)</button>
+        <button class="inspector__tab" data-target="colQueue">Orders (Queue)</button>
+        <button class="inspector__tab" data-target="colEmail">Outbox (Queue)</button>
+      </nav>
+
+      <div class="inspector__grid">
+        <!-- 1. Cart Linked List Column -->
+        <div id="colCart" class="inspector__col is-visible">
+          <div class="inspector__col-header">
+            <span>Cart · Singly Linked List</span>
+            <span style="font-size: 10px; color: var(--insp-list);">HEAD → TAIL</span>
+          </div>
+          <div id="inspectorLinkedList" class="inspector__col-content">
+            <!-- Dynamic Linked List Nodes -->
+          </div>
+        </div>
+
+        <!-- 2. Undo Stack Column -->
+        <div id="colStack" class="inspector__col">
+          <div class="inspector__col-header">
+            <span>Undo · LIFO Stack</span>
+            <span style="font-size: 10px; color: var(--insp-stack);">TOP</span>
+          </div>
+          <div id="inspectorStack" class="inspector__col-content">
+            <!-- Dynamic Stack Items -->
+          </div>
+        </div>
+
+        <!-- 3. Checkout Queue Column -->
+        <div id="colQueue" class="inspector__col">
+          <div class="inspector__col-header">
+            <span>Orders · FIFO Queue</span>
+            <span style="font-size: 10px; color: var(--insp-queue);">FRONT → REAR</span>
+          </div>
+          <div id="inspectorQueue" class="inspector__col-content">
+            <!-- Dynamic Queue Items -->
+          </div>
+        </div>
+
+        <!-- 4. Email Outbox Queue Column -->
+        <div id="colEmail" class="inspector__col">
+          <div class="inspector__col-header">
+            <span>Email Outbox · FIFO Queue</span>
+            <span style="font-size: 10px; color: var(--insp-queue);">FRONT → REAR</span>
+          </div>
+          <div id="inspectorEmailQueue" class="inspector__col-content">
+            <!-- Dynamic Email Queue Items -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- JavaScript Entry Module -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
